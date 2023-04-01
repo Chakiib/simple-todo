@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTodo.Web", "SimpleTodo.Web\SimpleTodo.Web.csproj", "{15AC1F4E-AAE2-43BE-B746-151981D8B6F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTodo.Core", "SimpleTodo.Core\SimpleTodo.Core.csproj", "{EFEE6ACA-AD07-4A43-A036-9D77A9553F69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTodo.Infrastructure", "SimpleTodo.Infrastructure\SimpleTodo.Infrastructure.csproj", "{BE76239B-9426-4C53-B5A4-EE9D4FB11275}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{15AC1F4E-AAE2-43BE-B746-151981D8B6F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15AC1F4E-AAE2-43BE-B746-151981D8B6F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15AC1F4E-AAE2-43BE-B746-151981D8B6F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFEE6ACA-AD07-4A43-A036-9D77A9553F69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFEE6ACA-AD07-4A43-A036-9D77A9553F69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFEE6ACA-AD07-4A43-A036-9D77A9553F69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFEE6ACA-AD07-4A43-A036-9D77A9553F69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE76239B-9426-4C53-B5A4-EE9D4FB11275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE76239B-9426-4C53-B5A4-EE9D4FB11275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE76239B-9426-4C53-B5A4-EE9D4FB11275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE76239B-9426-4C53-B5A4-EE9D4FB11275}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
