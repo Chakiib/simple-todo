@@ -26,6 +26,7 @@ public class TodoListsController : ControllerBase
     {
         var todoList = await _todoService.GetTodoListsAsync(cancellationToken);
 
+        _logger.LogInformation($"Returned all todo lists.");
         return Ok(_mapper.Map<IEnumerable<TodoListDto>>(todoList));
     }
 
@@ -39,6 +40,7 @@ public class TodoListsController : ControllerBase
             return NotFound();
         }
 
+        _logger.LogInformation($"Returned the list {todoList.Id}.");
         return Ok(_mapper.Map<TodoListDto>(todoList));
     }
 
@@ -53,6 +55,7 @@ public class TodoListsController : ControllerBase
 
         var todoList = await _todoService.CreateTodoListAsync(_mapper.Map<TodoList>(todoListDto), cancellationToken);
 
+        _logger.LogInformation($"Created a new todo list with id {todoList.Id}.");
         return CreatedAtAction(nameof(GetTodoList), new { id = todoList.Id }, _mapper.Map<TodoListDto>(todoList));
     }
 
@@ -75,6 +78,7 @@ public class TodoListsController : ControllerBase
             return NotFound("No todo list found");
         }
 
+        _logger.LogInformation($"Updated the todo list {id}.");
         return NoContent();
     }
 
@@ -93,6 +97,7 @@ public class TodoListsController : ControllerBase
             return NotFound("No todo list found");
         }
 
+        _logger.LogInformation($"Created a new todo item with id {id}.");
         return CreatedAtAction(
             nameof(TodosController.GetTodo),
             "Todos",
@@ -109,7 +114,7 @@ public class TodoListsController : ControllerBase
             return NotFound("No todo list found");
         }
 
-        _logger.LogInformation($"Removed todo list with id {id}.");
+        _logger.LogInformation($"Removed todo list {id}.");
         return NoContent();
     }
 }

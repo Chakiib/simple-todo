@@ -10,7 +10,6 @@ import {
   Skeleton,
   Snackbar,
   TextField,
-  Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2/Grid2";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,7 +22,7 @@ import {
   deleteTodoList,
 } from "../slices/todosSlice";
 import { CreateTodoListModel } from "../models/TodoModels";
-import DialogNewTodoList from "../components/DialogTodoList";
+import DialogNewTodoList from "../components/DialogNewTodoList";
 
 const renderLoadingSkeleton = (amount: number) => {
   return Array.from(Array(amount), (_, index) => (
@@ -34,7 +33,7 @@ const renderLoadingSkeleton = (amount: number) => {
 };
 
 const TodoListSection = () => {
-  const { lists, listLoadingStatus, listSavingStatus } =
+  const { lists, selectedList, listLoadingStatus, listSavingStatus } =
     useAppSelector(selectTodosState);
   const dispatch = useAppDispatch();
 
@@ -123,7 +122,7 @@ const TodoListSection = () => {
 
   return (
     <>
-      <Grid container>
+      <Grid container rowSpacing={2}>
         <Grid
           container
           xs={12}
@@ -154,9 +153,7 @@ const TodoListSection = () => {
           <List>
             {listLoadingStatus === "loading" && renderLoadingSkeleton(3)}
             {listLoadingStatus === "failed" && (
-              <Typography align="center">
-                Something went wrong. Please retry.
-              </Typography>
+              <ListItemText primary="Something went wrong. Please retry." />
             )}
             {listLoadingStatus === "idle" &&
               todoLists.map((l) => (
@@ -175,7 +172,10 @@ const TodoListSection = () => {
                   }
                   disablePadding
                 >
-                  <ListItemButton onClick={handleSelectClick(l.id)}>
+                  <ListItemButton
+                    onClick={handleSelectClick(l.id)}
+                    selected={selectedList?.id === l.id}
+                  >
                     <ListItemText primary={l.name} />
                   </ListItemButton>
                 </ListItem>

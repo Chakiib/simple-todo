@@ -25,6 +25,8 @@ public class TodosController : ControllerBase
     public async Task<ActionResult<IEnumerable<TodoDto>>> GetTodosAsync(CancellationToken cancellationToken = default)
     {
         var todos = await _todoService.GetTodosAsync(cancellationToken);
+
+        _logger.LogInformation($"Returned all todo items.");
         return Ok(_mapper.Map<IEnumerable<TodoDto>>(todos));
     }
 
@@ -38,6 +40,7 @@ public class TodosController : ControllerBase
             return NotFound();
         }
 
+        _logger.LogInformation($"Returned the todo items {todo.Id}.");
         return Ok(_mapper.Map<TodoDto>(todo));
     }
 
@@ -60,6 +63,7 @@ public class TodosController : ControllerBase
             return NotFound("No todo item found");
         }
 
+        _logger.LogInformation($"Updated the todo item {id}.");
         return NoContent();
     }
 

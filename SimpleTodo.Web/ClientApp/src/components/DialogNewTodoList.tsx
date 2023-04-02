@@ -9,26 +9,18 @@ import {
   TextField,
 } from "@mui/material";
 
-import { TodoListModel } from "../models/TodoModels";
+import { CreateTodoListModel } from "../models/TodoModels";
 
-interface DialogEditTodoListProps {
+interface DialogNewTodoListProps {
   open: boolean;
-  value?: TodoListModel;
-  onClose: (todolist?: TodoListModel) => void;
+  onClose: (todolist?: CreateTodoListModel) => void;
 }
 
-const DialogEditTodoList: React.FC<DialogEditTodoListProps> = ({
+const DialogNewTodoList: React.FC<DialogNewTodoListProps> = ({
   open,
-  value,
   onClose,
 }) => {
-  const [listName, setListName] = React.useState<string>(value?.name || "");
-
-  React.useEffect(() => {
-    if (!open && value) {
-      setListName(value.name);
-    }
-  }, [value, open]);
+  const [listName, setListName] = React.useState<string>("");
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event && event.target) {
@@ -40,16 +32,14 @@ const DialogEditTodoList: React.FC<DialogEditTodoListProps> = ({
     onClose();
   };
   const handleCreate = () => {
-    if (value) {
-      onClose({ ...value, name: listName });
-    }
+    onClose({ name: listName });
   };
 
   return (
     <Dialog open={open} onClose={handleCancel} fullWidth maxWidth="sm">
-      <DialogTitle>Edit TODO list name</DialogTitle>
+      <DialogTitle>Add a new TODO list</DialogTitle>
       <DialogContent>
-        <DialogContentText>Please enter the new list name.</DialogContentText>
+        <DialogContentText>Please enter the list name.</DialogContentText>
         <TextField
           id="list-name"
           label="Name"
@@ -62,12 +52,10 @@ const DialogEditTodoList: React.FC<DialogEditTodoListProps> = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleCreate} disabled={listName.length === 0}>
-          Create
-        </Button>
+        <Button onClick={handleCreate}>Create</Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default DialogEditTodoList;
+export default DialogNewTodoList;

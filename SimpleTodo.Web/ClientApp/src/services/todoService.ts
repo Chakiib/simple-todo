@@ -1,5 +1,6 @@
 import { ApiError } from "../models/ApiModels";
 import {
+  CreateTodoItemModel,
   CreateTodoListModel,
   TodoItemModel,
   TodoListModel,
@@ -9,29 +10,6 @@ const TODO_ROUTE = "api/todos";
 const TODOLIST_ROUTE = "api/todolists";
 
 const defaultHeaders = { Accept: "application/json" };
-
-// function getRandomInt(min: number, max: number): number {
-//   return Math.floor(Math.random() * (max - min) + min);
-// }
-
-// function createPromise(
-//   data: any,
-//   latencyOptions = {
-//     minMs: 0,
-//     maxMs: 5000,
-//     shouldFail: false,
-//   },
-// ): Promise<any> {
-//   return new Promise((resolve, reject) => {
-//     setTimeout(
-//       latencyOptions.shouldFail === true ? reject : resolve,
-//       latencyOptions.minMs === latencyOptions.maxMs
-//         ? latencyOptions.minMs
-//         : getRandomInt(latencyOptions.minMs, latencyOptions.maxMs),
-//       data,
-//     );
-//   });
-// }
 
 const handleError = (error: any, httpStatus?: number): ApiError => {
   if (!error) {
@@ -136,9 +114,64 @@ const updateTodoListsAsync = async (
   }
 };
 
+const createTodoItemAsync = async (
+  todoListId: number,
+  todoItem: CreateTodoItemModel,
+): Promise<TodoItemModel | { error: ApiError }> => {
+  try {
+    const result = await fetch(`${TODOLIST_ROUTE}/${todoListId}/items`, {
+      method: "POST",
+      headers: { ...defaultHeaders, "Content-type": "application/json" },
+      body: JSON.stringify(todoItem),
+    });
+
+    if (!result.ok) {
+      return { error: handleError(await result.json(), result.status) };
+    }
+
+    return result.json() as Promise<TodoItemModel>;
+  } catch (error) {
+    return { error: handleError(error) };
+  }
+};
+
+const deleteTodoItemAsync = async (
+  todoItemId: number,
+): Promise<null | ApiError> => {
+  try {
+    const result = await fetch(`${TODO_ROUTE}/${todoItemId}`, {
+      method: "DELETE",
+      headers: { ...defaultHeaders },
+    });
+
+    return result.ok ? null : handleError(await result.json(), result.status);
+  } catch (e) {
+    return handleError(e);
+  }
+};
+
+const updateTodoItemAsync = async (
+  todoItem: TodoItemModel,
+): Promise<null | ApiError> => {
+  try {
+    const result = await fetch(`${TODO_ROUTE}/${todoItem.id}`, {
+      method: "PUT",
+      headers: { ...defaultHeaders, "Content-type": "application/json" },
+      body: JSON.stringify(todoItem),
+    });
+
+    return result.ok ? null : handleError(await result.json(), result.status);
+  } catch (e) {
+    return handleError(e);
+  }
+};
+
 export {
   getTodoListsAsync,
   createTodoListAsync,
   deleteTodoListsAsync,
   updateTodoListsAsync,
+  createTodoItemAsync,
+  deleteTodoItemAsync,
+  updateTodoItemAsync,
 };

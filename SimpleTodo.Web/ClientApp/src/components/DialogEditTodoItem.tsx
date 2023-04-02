@@ -9,30 +9,30 @@ import {
   TextField,
 } from "@mui/material";
 
-import { TodoListModel } from "../models/TodoModels";
+import { TodoItemModel } from "../models/TodoModels";
 
-interface DialogEditTodoListProps {
+interface DialogEditTodoItemProps {
   open: boolean;
-  value?: TodoListModel;
-  onClose: (todolist?: TodoListModel) => void;
+  value?: TodoItemModel;
+  onClose: (todoItem?: TodoItemModel) => void;
 }
 
-const DialogEditTodoList: React.FC<DialogEditTodoListProps> = ({
+const DialogEditTodoItem: React.FC<DialogEditTodoItemProps> = ({
   open,
   value,
   onClose,
 }) => {
-  const [listName, setListName] = React.useState<string>(value?.name || "");
+  const [newName, setNewName] = React.useState<string>(value?.name || "");
 
   React.useEffect(() => {
     if (!open && value) {
-      setListName(value.name);
+      setNewName(value.name);
     }
   }, [value, open]);
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event && event.target) {
-      setListName(event.target.value);
+      setNewName(event.target.value);
     }
   };
 
@@ -41,15 +41,15 @@ const DialogEditTodoList: React.FC<DialogEditTodoListProps> = ({
   };
   const handleCreate = () => {
     if (value) {
-      onClose({ ...value, name: listName });
+      onClose({ ...value, name: newName });
     }
   };
 
   return (
     <Dialog open={open} onClose={handleCancel} fullWidth maxWidth="sm">
-      <DialogTitle>Edit TODO list name</DialogTitle>
+      <DialogTitle>Edit TODO name</DialogTitle>
       <DialogContent>
-        <DialogContentText>Please enter the new list name.</DialogContentText>
+        <DialogContentText>Please enter the new name.</DialogContentText>
         <TextField
           id="list-name"
           label="Name"
@@ -57,12 +57,12 @@ const DialogEditTodoList: React.FC<DialogEditTodoListProps> = ({
           fullWidth
           autoFocus
           onChange={handleNameChange}
-          value={listName}
+          value={newName}
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleCreate} disabled={listName.length === 0}>
+        <Button onClick={handleCreate} disabled={newName.length === 0}>
           Create
         </Button>
       </DialogActions>
@@ -70,4 +70,4 @@ const DialogEditTodoList: React.FC<DialogEditTodoListProps> = ({
   );
 };
 
-export default DialogEditTodoList;
+export default DialogEditTodoItem;

@@ -9,22 +9,22 @@ import {
   TextField,
 } from "@mui/material";
 
-import { CreateTodoListModel } from "../models/TodoModels";
+import { CreateTodoItemModel } from "../models/TodoModels";
 
-interface DialogNewTodoListProps {
+interface DialogNewTodoItemProps {
   open: boolean;
-  onClose: (todolist?: CreateTodoListModel) => void;
+  onClose: (todoItem?: CreateTodoItemModel) => void;
 }
 
-const DialogNewTodoList: React.FC<DialogNewTodoListProps> = ({
+const DialogNewTodoItem: React.FC<DialogNewTodoItemProps> = ({
   open,
   onClose,
 }) => {
-  const [listName, setListName] = React.useState<string>("");
+  const [itemName, setItemName] = React.useState<string>("");
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event && event.target) {
-      setListName(event.target.value);
+      setItemName(event.target.value);
     }
   };
 
@@ -32,30 +32,32 @@ const DialogNewTodoList: React.FC<DialogNewTodoListProps> = ({
     onClose();
   };
   const handleCreate = () => {
-    onClose({ name: listName });
+    onClose({ name: itemName });
   };
 
   return (
     <Dialog open={open} onClose={handleCancel} fullWidth maxWidth="sm">
-      <DialogTitle>Create new a TODO list</DialogTitle>
+      <DialogTitle>Add a new TODO</DialogTitle>
       <DialogContent>
-        <DialogContentText>Please enter the list name.</DialogContentText>
+        <DialogContentText>Please enter the name.</DialogContentText>
         <TextField
-          id="list-name"
+          id="item-name"
           label="Name"
           margin="dense"
           fullWidth
           autoFocus
           onChange={handleNameChange}
-          value={listName}
+          value={itemName}
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleCreate}>Create</Button>
+        <Button onClick={handleCreate} disabled={itemName.length === 0}>
+          Create
+        </Button>
       </DialogActions>
     </Dialog>
   );
 };
 
-export default DialogNewTodoList;
+export default DialogNewTodoItem;

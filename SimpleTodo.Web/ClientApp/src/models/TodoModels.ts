@@ -15,3 +15,8 @@ export interface TodoListModel {
 export interface CreateTodoListModel {
   name: string;
 }
+
+export interface CreateTodoItemModel {
+  name: string;
+  description?: string;
+}
