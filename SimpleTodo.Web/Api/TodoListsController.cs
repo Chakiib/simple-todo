@@ -78,6 +78,28 @@ public class TodoListsController : ControllerBase
         return NoContent();
     }
 
+    [HttpPost("{id:int}/items")]
+    public async Task<IActionResult> CreateTodoItemAsync(int id, [FromBody] TodoDto todoDto, CancellationToken cancellationToken = default)
+    {
+        if (!ModelState.IsValid)
+        {
+            _logger.LogError("Received invalid todo item.");
+            return BadRequest(ModelState);
+        }
+
+        var todoItem = await _todoService.CreateTodoAsync(id, _mapper.Map<TodoItem>(todoDto), cancellationToken);
+        if (todoItem == null)
+        {
+            return NotFound("No todo list found");
+        }
+
+        return CreatedAtAction(
+            nameof(TodosController.GetTodo),
+            "Todos",
+            new { id = todoItem.Id },
+            _mapper.Map<TodoDto>(todoItem));
+    }
+
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteTodoListAsync(int id, CancellationToken cancellationToken = default)
     {

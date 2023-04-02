@@ -36,18 +36,23 @@ public class TodoRepository : ITodoRepository
         return await query.ToListAsync(cancellationToken);
     }
 
-    public Task<TodoItem> AddAsync(TodoItem entity, CancellationToken cancellationToken = default)
+    public async Task<TodoItem> AddAsync(TodoItem entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        _context.TodoItems.Add(entity);
+        await _context.SaveChangesAsync(cancellationToken);
+        return entity;
     }
 
-    public Task UpdateAsync(TodoItem entity, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(TodoItem entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        _context.TodoItems.Update(entity);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 
-    public Task DeleteAsync(TodoItem entity, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteAsync(TodoItem entity, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        _context.TodoItems.Remove(entity);
+        var deleted = await _context.SaveChangesAsync(cancellationToken);
+        return deleted > 0;
     }
 }

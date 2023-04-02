@@ -25,21 +25,44 @@ public class TodoService : ITodoService
         return item;
     }
 
-    public Task<TodoItem> CreateTodoAsync(
-        TodoItem todoItem,
-        CancellationToken cancellationToken = default)
+    public async Task<TodoItem?> CreateTodoAsync(int todoListId, TodoItem todo, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var todoList = await _todoListRepository.GetByIdAsync(todoListId, cancellationToken);
+        if (todoList == null)
+        {
+            return null;
+        }
+
+        todoList.TodoItems.Add(todo);
+        await _todoListRepository.UpdateAsync(todoList, cancellationToken);
+        return todo;
     }
 
-    public Task<TodoList?> UpdateTodoAsync(TodoItem todoItem, CancellationToken cancellationToken = default)
+    public async Task<TodoItem?> UpdateTodoAsync(TodoItem model, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var todoItem = await _todoRepository.GetByIdAsync(model.Id, cancellationToken);
+        if (todoItem == null)
+        {
+            return null;
+        }
+
+        todoItem.Name = model.Name;
+        todoItem.Description = model.Description;
+        todoItem.IsComplete = model.IsComplete;
+        await _todoRepository.UpdateAsync(todoItem, cancellationToken);
+
+        return todoItem;
     }
 
-    public Task<bool> DeleteTodoAsync(int id, CancellationToken cancellationToken = default)
+    public async Task<bool> DeleteTodoAsync(int id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        var todoItem = await _todoRepository.GetByIdAsync(id, cancellationToken);
+        if (todoItem == null)
+        {
+            return false;
+        }
+
+        return await _todoRepository.DeleteAsync(todoItem, cancellationToken);
     }
 
     public async Task<IEnumerable<TodoList>> GetTodoListsAsync(CancellationToken cancellationToken)
@@ -47,27 +70,20 @@ public class TodoService : ITodoService
         return await _todoListRepository.GetAllAsync(cancellationToken);
     }
 
-    public async Task<TodoList?> GetTodoListAsync(int id, CancellationToken cancellationToken = default)
+    public Task<TodoList?> GetTodoListAsync(int id, CancellationToken cancellationToken = default)
     {
-        var item = await _todoListRepository.GetByIdAsync(id, cancellationToken);
-        return item;
+        return _todoListRepository.FindAsync(id, cancellationToken);
+    }
+
+    public Task<bool> TodoListExistsAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return _todoListRepository.ExistsAsync(id, cancellationToken);
     }
 
     public async Task<TodoList> CreateTodoListAsync(TodoList todoList, CancellationToken cancellationToken = default)
     {
         var newTodoList = await _todoListRepository.AddAsync(todoList, cancellationToken);
         return newTodoList;
-    }
-
-    public async Task<bool> DeleteTodoListAsync(int id, CancellationToken cancellationToken = default)
-    {
-        var todoList = await _todoListRepository.GetByIdAsync(id, cancellationToken);
-        if (todoList == null)
-        {
-            return false;
-        }
-
-        return await _todoListRepository.DeleteAsync(todoList, cancellationToken);
     }
 
     public async Task<TodoList?> UpdateTodoListAsync(
@@ -85,5 +101,16 @@ public class TodoService : ITodoService
         await _todoListRepository.UpdateAsync(todoList, cancellationToken);
 
         return todoList;
+    }
+
+    public async Task<bool> DeleteTodoListAsync(int id, CancellationToken cancellationToken = default)
+    {
+        var todoList = await _todoListRepository.GetByIdAsync(id, cancellationToken);
+        if (todoList == null)
+        {
+            return false;
+        }
+
+        return await _todoListRepository.DeleteAsync(todoList, cancellationToken);
     }
 }

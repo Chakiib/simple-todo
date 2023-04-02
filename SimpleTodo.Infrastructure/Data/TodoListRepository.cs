@@ -24,6 +24,18 @@ public class TodoListRepository : ITodoListRepository
         return await _context.TodoLists.FindAsync(new object[] { id }, cancellationToken);
     }
 
+    public async Task<bool> ExistsAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await GetByIdAsync(id, cancellationToken) != null;
+    }
+
+    public async Task<TodoList?> FindAsync(int id, CancellationToken cancellationToken = default)
+    {
+        return await _context.TodoLists.Where(l => l.Id == id)
+            .Include(l => l.TodoItems)
+            .SingleOrDefaultAsync(cancellationToken);
+    }
+
     public async Task<IEnumerable<TodoList>> FindAsync(Expression<Func<TodoList, bool>>? filter = null, CancellationToken cancellationToken = default)
     {
         IQueryable<TodoList> query = _context.TodoLists;
