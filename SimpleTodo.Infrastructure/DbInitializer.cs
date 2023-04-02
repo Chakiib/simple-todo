@@ -11,7 +11,7 @@ public static class DbInitializer
             return; // DB has been seeded
         }
 
-        var todoList = new TodoList { Name = "My todo list", ToDoItems = new List<TodoItem>() };
+        var todoList = new TodoList { Name = "My todo list", TodoItems = new List<TodoItem>() };
         dbContext.TodoLists.Add(todoList);
         dbContext.SaveChanges();
 
@@ -22,9 +22,9 @@ public static class DbInitializer
         dbContext.TodoItems.Add(todoItem2);
         dbContext.TodoItems.Add(todoItem3);
 
-        todoList.ToDoItems.Add(todoItem1);
-        todoList.ToDoItems.Add(todoItem2);
-        todoList.ToDoItems.Add(todoItem3);
+        todoList.TodoItems.Add(todoItem1);
+        todoList.TodoItems.Add(todoItem2);
+        todoList.TodoItems.Add(todoItem3);
 
         dbContext.SaveChanges();
     }

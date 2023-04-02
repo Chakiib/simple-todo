@@ -20,6 +20,13 @@ public class TodosController : ControllerBase
         _logger = logger;
     }
 
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<TodoDto>>> GetTodosAsync(CancellationToken cancellationToken = default)
+    {
+        var todos = await _todoService.GetTodosAsync(cancellationToken);
+        return Ok(_mapper.Map<IEnumerable<TodoDto>>(todos));
+    }
+
     [HttpGet("{id:int}")]
     public async Task<IActionResult> GetTodoAsync(int id, CancellationToken cancellationToken = default)
     {

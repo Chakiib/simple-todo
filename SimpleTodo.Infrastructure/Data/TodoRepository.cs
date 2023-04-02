@@ -14,7 +14,12 @@ public class TodoRepository : ITodoRepository
         _context = dbContext;
     }
 
-    public async Task<TodoItem> GetByIdAsync(int id, CancellationToken cancellationToken)
+    public async Task<IEnumerable<TodoItem>> GetAllAsync(CancellationToken cancellationToken = default)
+    {
+        return await _context.TodoItems.ToListAsync(cancellationToken);
+    }
+
+    public async Task<TodoItem?> GetByIdAsync(int id, CancellationToken cancellationToken)
     {
         return await _context.TodoItems.FindAsync(new object[] { id }, cancellationToken);
     }
@@ -42,11 +47,6 @@ public class TodoRepository : ITodoRepository
     }
 
     public Task DeleteAsync(TodoItem entity, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }

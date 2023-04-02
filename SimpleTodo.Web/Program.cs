@@ -5,6 +5,7 @@ using SimpleTodo.Infrastructure;
 using SimpleTodo.Infrastructure.Data;
 using SimpleTodo.Web;
 using SimpleTodo.Web.Extensions;
+using SimpleTodo.Web.MappingProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
