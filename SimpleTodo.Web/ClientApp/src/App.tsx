@@ -1,23 +1,18 @@
 import React from "react";
+import { Container, Stack, Typography } from "@mui/material";
+import TodoListSection from "./containers/TodoListSection";
+import TodosSection from "./containers/TodosSection";
 
-const App = () => {
+function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container maxWidth="sm">
+      <Stack spacing={2}>
+        <Typography variant="h4">Simple Todo</Typography>
+        <TodoListSection />
+        <TodosSection />
+      </Stack>
+    </Container>
   );
-};
+}
 
 export default App;
