@@ -128,7 +128,7 @@ const TodosSection = () => {
           <Grid>
             <Button
               variant="contained"
-              disabled={isLoading}
+              disabled={isLoading || !selectedList}
               onClick={handleCreateClick}
             >
               Add a new todo
