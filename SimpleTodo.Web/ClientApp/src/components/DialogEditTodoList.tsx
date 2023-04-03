@@ -39,7 +39,7 @@ const DialogEditTodoList: React.FC<DialogEditTodoListProps> = ({
   const handleCancel = () => {
     onClose();
   };
-  const handleCreate = () => {
+  const handleSave = () => {
     if (value) {
       onClose({ ...value, name: listName });
     }
@@ -62,8 +62,8 @@ const DialogEditTodoList: React.FC<DialogEditTodoListProps> = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel}>Cancel</Button>
-        <Button onClick={handleCreate} disabled={listName.length === 0}>
-          Create
+        <Button onClick={handleSave} disabled={listName.length === 0}>
+          Save
         </Button>
       </DialogActions>
     </Dialog>
