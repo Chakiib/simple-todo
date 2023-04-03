@@ -11,7 +11,6 @@ public interface ITodoService
     Task<bool> DeleteTodoAsync(int id, CancellationToken cancellationToken = default);
     Task<IEnumerable<TodoList>> GetTodoListsAsync(CancellationToken cancellationToken = default);
     Task<TodoList?> GetTodoListAsync(int id, CancellationToken cancellationToken = default);
-    Task<bool> TodoListExistsAsync(int id, CancellationToken cancellationToken = default);
     Task<TodoList> CreateTodoListAsync(TodoList todoList, CancellationToken cancellationToken = default);
     Task<TodoList?> UpdateTodoListAsync(TodoList model, CancellationToken cancellationToken = default);
     Task<bool> DeleteTodoListAsync(int id, CancellationToken cancellationToken = default);

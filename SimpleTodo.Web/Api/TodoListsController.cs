@@ -97,7 +97,7 @@ public class TodoListsController : ControllerBase
             return NotFound("No todo list found");
         }
 
-        _logger.LogInformation($"Created a new todo item with id {id}.");
+        _logger.LogInformation($"Created a new todo item with id {todoItem.Id}.");
         return CreatedAtAction(
             nameof(TodosController.GetTodo),
             "Todos",

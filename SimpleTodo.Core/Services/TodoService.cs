@@ -62,7 +62,8 @@ public class TodoService : ITodoService
             return false;
         }
 
-        return await _todoRepository.DeleteAsync(todoItem, cancellationToken);
+        await _todoRepository.DeleteAsync(todoItem, cancellationToken);
+        return true;
     }
 
     public async Task<IEnumerable<TodoList>> GetTodoListsAsync(CancellationToken cancellationToken)
@@ -72,7 +73,7 @@ public class TodoService : ITodoService
 
     public Task<TodoList?> GetTodoListAsync(int id, CancellationToken cancellationToken = default)
     {
-        return _todoListRepository.FindAsync(id, cancellationToken);
+        return _todoListRepository.GetByIdAsync(id, cancellationToken);
     }
 
     public Task<bool> TodoListExistsAsync(int id, CancellationToken cancellationToken = default)
@@ -111,6 +112,7 @@ public class TodoService : ITodoService
             return false;
         }
 
-        return await _todoListRepository.DeleteAsync(todoList, cancellationToken);
+        await _todoListRepository.DeleteAsync(todoList, cancellationToken);
+        return true;
     }
 }

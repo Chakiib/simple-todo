@@ -3,7 +3,6 @@ using SimpleTodo.Core.Interfaces;
 using SimpleTodo.Core.Services;
 using SimpleTodo.Infrastructure;
 using SimpleTodo.Infrastructure.Data;
-using SimpleTodo.Web;
 using SimpleTodo.Web.Extensions;
 using SimpleTodo.Web.MappingProfiles;
 
